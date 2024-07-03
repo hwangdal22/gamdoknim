@@ -95,36 +95,4 @@ document.addEventListener('DOMContentLoaded', () => {
               <button class="delete-movie-btn" data-id="${movieId}">Delete</button>
             </li>`;
         });
-        if (movieList) {
-          movieList.innerHTML = moviesHTML;
-        }
-        if (movieListMain) {
-          movieListMain.innerHTML = moviesHTML;
-        }
-        addDeleteEventListeners();
-      }).catch((error) => {
-        console.error('Load movies error:', error);
-      });
-    }
-  }
-
-  function addDeleteEventListeners() {
-    const deleteBtns = document.querySelectorAll('.delete-movie-btn');
-    deleteBtns.forEach(btn => {
-      btn.addEventListener('click', (event) => {
-        const movieId = event.target.dataset.id;
-        console.log('Deleting movie with ID:', movieId);
-
-        db.collection('movies').doc(movieId).delete().then(() => {
-          console.log('Movie deleted successfully');
-          loadMovies();
-        }).catch((error) => {
-          console.error('Error removing movie:', error);
-          alert(error.message);
-        });
-      });
-    });
-  }
-
-  loadMovies();
-});
+       
