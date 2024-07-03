@@ -18,5 +18,15 @@
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
   <script src="firebase-config.js"></script>
   <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      auth.onAuthStateChanged(user => {
+        if (!user) {
+          alert('Please log in.');
+          window.location.href = 'index.html';
+        }
+      });
+    });
+  </script>
 </body>
 </html>
