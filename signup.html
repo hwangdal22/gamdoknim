@@ -1,4 +1,3 @@
-<!-- signup.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,9 +15,49 @@
     <button id="signup-btn">Sign Up</button>
     <a href="index.html">Back to Login</a>
   </div>
-  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
-  <script src="firebase-config.js"></script>
-  <script src="script.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyC76UO382ag8wictHgXm4cVR6d-jmYcZMU",
+      authDomain: "gamdoknim-18712.firebaseapp.com",
+      projectId: "gamdoknim-18712",
+      storageBucket: "gamdoknim-18712.appspot.com",
+      messagingSenderId: "1070367551016",
+      appId: "1:1070367551016:web:cf51d36071a8591ed1cf1d",
+      measurementId: "G-YXNJ2T6943"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const signupBtn = document.getElementById('signup-btn');
+      signupBtn.addEventListener('click', () => {
+        const email = document.getElementById('signup-email').value;
+        const password = document.getElementById('signup-password').value;
+        const confirmPassword = document.getElementById('signup-confirm-password').value;
+
+        if (password !== confirmPassword) {
+          alert('Passwords do not match');
+          return;
+        }
+
+        console.log('Signing up with', email);
+        auth.createUserWithEmailAndPassword(email, password)
+          .then((userCredential) => {
+            console.log('Signup successful:', userCredential.user);
+            window.location.href = 'index.html';
+          })
+          .catch((error) => {
+            console.error('Signup error:', error);
+            alert(error.message);
+          });
+      });
+    });
+  </script>
 </body>
 </html>
