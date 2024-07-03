@@ -68,31 +68,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
-      auth.signOut().then(() => {
-        console.log('Logout successful');
-        window.location.href = 'index.html';
-      }).catch((error) => {
-        console.error('Logout error:', error);
-        alert(error.message);
-      });
-    });
-  }
-
-  function loadMovies() {
-    const movieList = document.getElementById('movie-list');
-    const movieListMain = document.getElementById('movie-list-main');
-
-    console.log('Loading movies...');
-    if (movieList || movieListMain) {
-      db.collection('movies').get().then((querySnapshot) => {
-        let moviesHTML = '';
-        querySnapshot.forEach((doc) => {
-          const movie = doc.data();
-          const movieId = doc.id;
-          moviesHTML += `
-            <li>
-              ${movie.title}
-              <button class="delete-movie-btn" data-id="${movieId}">Delete</button>
-            </li>`;
-        });
-       
+​⬤
