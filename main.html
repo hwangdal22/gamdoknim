@@ -1,16 +1,19 @@
-<!-- main.html -->
+<!-- admin.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Movie Club - Main</title>
+  <title>Movie Club - Admin</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h2>Movies</h2>
-    <ul id="movie-list-main"></ul>
+    <h2>Admin - Add/Delete Movie</h2>
+    <input type="text" id="movie-title" placeholder="Movie Title">
+    <button id="add-movie-btn">Add Movie</button>
+    <h3>Movie List</h3>
+    <ul id="movie-list"></ul>
     <button id="logout-btn">Logout</button>
   </div>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
@@ -18,15 +21,5 @@
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
   <script src="firebase-config.js"></script>
   <script src="script.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      auth.onAuthStateChanged(user => {
-        if (!user) {
-          alert('Please log in.');
-          window.location.href = 'index.html';
-        }
-      });
-    });
-  </script>
 </body>
 </html>
