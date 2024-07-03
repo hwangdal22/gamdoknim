@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         title: movieTitle,
         reviews: []
       }).then(() => {
+        console.log('Movie added successfully');
         loadMovies();
       }).catch((error) => {
         alert(error.message);
@@ -102,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.addEventListener('click', (event) => {
         const movieId = event.target.dataset.id;
         db.collection('movies').doc(movieId).delete().then(() => {
+          console.log('Movie deleted successfully');
           loadMovies();
         }).catch((error) => {
           alert('Error removing movie: ', error);
