@@ -19,6 +19,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
   <script>
+    // Firebase 초기화 코드
     const firebaseConfig = {
       apiKey: "AIzaSyC76UO382ag8wictHgXm4cVR6d-jmYcZMU",
       authDomain: "gamdoknim-18712.firebaseapp.com",
@@ -32,6 +33,7 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
+    console.log('Firebase initialized:', firebaseConfig);
   </script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -48,6 +50,11 @@
       addMovieBtn.addEventListener('click', () => {
         const movieTitle = document.getElementById('movie-title').value;
         console.log('Adding movie:', movieTitle);
+
+        if (movieTitle.trim() === '') {
+          alert('Movie title cannot be empty');
+          return;
+        }
 
         db.collection('movies').add({
           title: movieTitle,
