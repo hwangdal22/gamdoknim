@@ -76,7 +76,12 @@ document.addEventListener('DOMContentLoaded', () => {
         let moviesHTML = '';
         querySnapshot.forEach((doc) => {
           const movie = doc.data();
-          moviesHTML += `<li>${movie.title}</li>`;
+          const movieId = doc.id;
+          moviesHTML += `
+            <li>
+              ${movie.title}
+              <button class="delete-movie-btn" data-id="${movieId}">Delete</button>
+            </li>`;
         });
         if (movieList) {
           movieList.innerHTML = moviesHTML;
@@ -84,8 +89,25 @@ document.addEventListener('DOMContentLoaded', () => {
         if (movieListMain) {
           movieListMain.innerHTML = moviesHTML;
         }
+        addDeleteEventListeners();
+      }).catch((error) => {
+        console.error('Load movies error:', error);
       });
     }
+  }
+
+  function addDeleteEventListeners() {
+    const deleteBtns = document.querySelectorAll('.delete-movie-btn');
+    deleteBtns.forEach(btn => {
+      btn.addEventListener('click', (event) => {
+        const movieId = event.target.dataset.id;
+        db.collection('movies').doc(movieId).delete().then(() => {
+          loadMovies();
+        }).catch((error) => {
+          alert('Error removing movie: ', error);
+        });
+      });
+    });
   }
 
   loadMovies();
