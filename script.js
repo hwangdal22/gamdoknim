@@ -11,11 +11,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const email = document.getElementById('login-email').value;
       const password = document.getElementById('login-password').value;
 
+      console.log('Logging in with', email);
       auth.signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
+          console.log('Login successful:', userCredential.user);
           window.location.href = 'main.html';
         })
         .catch((error) => {
+          console.error('Login error:', error);
           alert(error.message);
         });
     });
@@ -32,11 +35,14 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
+      console.log('Signing up with', email);
       auth.createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
+          console.log('Signup successful:', userCredential.user);
           window.location.href = 'index.html';
         })
         .catch((error) => {
+          console.error('Signup error:', error);
           alert(error.message);
         });
     });
@@ -45,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (addMovieBtn) {
     addMovieBtn.addEventListener('click', () => {
       const movieTitle = document.getElementById('movie-title').value;
+      console.log('Adding movie:', movieTitle);
 
       db.collection('movies').add({
         title: movieTitle,
@@ -53,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Movie added successfully');
         loadMovies();
       }).catch((error) => {
+        console.error('Add movie error:', error);
         alert(error.message);
       });
     });
@@ -61,8 +69,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
       auth.signOut().then(() => {
+        console.log('Logout successful');
         window.location.href = 'index.html';
       }).catch((error) => {
+        console.error('Logout error:', error);
         alert(error.message);
       });
     });
@@ -72,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const movieList = document.getElementById('movie-list');
     const movieListMain = document.getElementById('movie-list-main');
 
+    console.log('Loading movies...');
     if (movieList || movieListMain) {
       db.collection('movies').get().then((querySnapshot) => {
         let moviesHTML = '';
@@ -102,11 +113,14 @@ document.addEventListener('DOMContentLoaded', () => {
     deleteBtns.forEach(btn => {
       btn.addEventListener('click', (event) => {
         const movieId = event.target.dataset.id;
+        console.log('Deleting movie with ID:', movieId);
+
         db.collection('movies').doc(movieId).delete().then(() => {
           console.log('Movie deleted successfully');
           loadMovies();
         }).catch((error) => {
-          alert('Error removing movie: ', error);
+          console.error('Error removing movie:', error);
+          alert(error.message);
         });
       });
     });
