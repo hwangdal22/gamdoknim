@@ -11,6 +11,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
   <script>
+    // Firebase 초기화 코드
     const firebaseConfig = {
       apiKey: "AIzaSyC76UO382ag8wictHgXm4cVR6d-jmYcZMU",
       authDomain: "gamdoknim-18712.firebaseapp.com",
@@ -25,6 +26,7 @@
     const db = firebase.firestore();
     console.log('Firebase initialized:', firebaseConfig);
 
+    // 테스트 버튼 클릭 시 Firestore에 데이터 추가
     document.getElementById('test-btn').addEventListener('click', () => {
       db.collection('test').add({
         name: 'Test Data',
