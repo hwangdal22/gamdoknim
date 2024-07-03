@@ -1,25 +1,76 @@
-<!-- admin.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Movie Club - Admin</title>
+  <title>Movie Club - Main</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h2>Admin - Add/Delete Movie</h2>
-    <input type="text" id="movie-title" placeholder="Movie Title">
-    <button id="add-movie-btn">Add Movie</button>
-    <h3>Movie List</h3>
-    <ul id="movie-list"></ul>
+    <h2>Movies</h2>
+    <ul id="movie-list-main"></ul>
     <button id="logout-btn">Logout</button>
   </div>
-  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
   <script src="firebase-config.js"></script>
-  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      auth.onAuthStateChanged(user => {
+        if (!user) {
+          alert('Please log in.');
+          window.location.href = 'index.html';
+        } else {
+          loadMovies();
+        }
+      });
+
+      const logoutBtn = document.getElementById('logout-btn');
+      logoutBtn.addEventListener('click', () => {
+        auth.signOut().then(() => {
+          window.location.href = 'index.html';
+        }).catch((error) => {
+          console.error('Logout error:', error);
+          alert(error.message);
+        });
+      });
+    });
+
+    function loadMovies() {
+      const movieListMain = document.getElementById('movie-list-main');
+
+      console.log('Loading movies...');
+      db.collection('movies').get().then((querySnapshot) => {
+        let moviesHTML = '';
+        querySnapshot.forEach((doc) => {
+          const movie = doc.data();
+          const movieId = doc.id;
+          moviesHTML += `
+            <li>
+              ${movie.title}
+              <button class="rate-movie-btn" data-id="${movieId}">Rate</button>
+            </li>`;
+        });
+        movieListMain.innerHTML = moviesHTML;
+        addRateEventListeners();
+      }).catch((error) => {
+        console.error('Load movies error:', error);
+      });
+    }
+
+    function addRateEventListeners() {
+      const rateBtns = document.querySelectorAll('.rate-movie-btn');
+      rateBtns.forEach(btn => {
+        btn.addEventListener('click', (event) => {
+          const movieId = event.target.dataset.id;
+          // 팝업이나 모달을 띄워 영화 평점과 감상평을 남길 수 있게 구현
+          console.log('Rate movie with ID:', movieId);
+          // 여기에 팝업이나 모달 관련 코드 추가
+        });
+      });
+    }
+  </script>
 </body>
 </html>
